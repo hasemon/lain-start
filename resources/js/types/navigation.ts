@@ -11,4 +11,6 @@ export type NavItem = {
     href: NonNullable<InertiaLinkProps['href']>;
     icon?: LucideIcon | null;
     isActive?: boolean;
+    /** Show the item only if the user has this permission (or any of these). Super Admin sees everything. */
+    permission?: string | readonly string[];
 };

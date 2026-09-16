@@ -2,11 +2,15 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Policies\RolePolicy;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Spatie\Permission\Models\Role;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +28,19 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->configureAuthorization();
+    }
+
+    /**
+     * Grant the Super Admin role every ability.
+     *
+     * Returning null (not false) lets normal policies and permissions decide for everyone else.
+     */
+    protected function configureAuthorization(): void
+    {
+        Gate::before(fn (mixed $user): ?bool => $user instanceof User && $user->isSuperAdmin() ? true : null);
+
+        Gate::policy(Role::class, RolePolicy::class);
     }
 
     /**

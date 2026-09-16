@@ -1,9 +1,0 @@
-packages:
-  - '.'
-
-minimumReleaseAgeExclude:
-  - '@tanstack/query-core@5.103.1'
-  - '@tanstack/react-query@5.103.1'
-
-publicHoistPattern:
-  - '@inertiajs/core'
