@@ -1,13 +1,6 @@
 import { Link } from '@inertiajs/react';
-import {
-    BookOpen,
-    FolderGit2,
-    LayoutGrid,
-    ShieldCheck,
-    Users,
-} from 'lucide-react';
+import { LayoutGrid, Settings2, ShieldCheck, Users } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -22,9 +15,9 @@ import {
 import { dashboard } from '@/routes';
 import { index as rolesIndex } from '@/routes/roles';
 import { index as usersIndex } from '@/routes/users';
-import type { NavItem } from '@/types';
+import type { NavEntry } from '@/types';
 
-const mainNavItems: NavItem[] = [
+const mainNavItems: NavEntry[] = [
     {
         title: 'Dashboard',
         href: dashboard(),
@@ -32,31 +25,24 @@ const mainNavItems: NavItem[] = [
     },
 ];
 
-const administrationNavItems: NavItem[] = [
+const administrationNavItems: NavEntry[] = [
     {
-        title: 'Users',
-        href: usersIndex(),
-        icon: Users,
-        permission: 'users.view',
-    },
-    {
-        title: 'Roles & Permissions',
-        href: rolesIndex(),
-        icon: ShieldCheck,
-        permission: 'roles.view',
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
+        title: 'Administration',
+        icon: Settings2,
+        items: [
+            {
+                title: 'Users',
+                href: usersIndex(),
+                icon: Users,
+                permission: 'users.view',
+            },
+            {
+                title: 'Roles & Permissions',
+                href: rolesIndex(),
+                icon: ShieldCheck,
+                permission: 'roles.view',
+            },
+        ],
     },
 ];
 
@@ -77,14 +63,14 @@ export function AppSidebar() {
 
             <SidebarContent>
                 <NavMain items={mainNavItems} />
-                <NavMain
-                    items={administrationNavItems}
-                    label="Administration"
-                />
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
+                <NavMain
+                    items={administrationNavItems}
+                    label={null}
+                    className="mt-auto"
+                />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>
